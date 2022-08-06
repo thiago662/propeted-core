@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\AnimalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,11 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/owners/{owner}', [OwnerController::class, 'show'])->name('owners.show');
     Route::match(['put', 'patch'], '/owners/{owner}', [OwnerController::class, 'update'])->name('owners.update');
     Route::delete('/owners/{owner}', [OwnerController::class, 'destroy'])->name('owners.destroy');
+
+    // Route::apiResource('/animals', AnimalController::class);
+    Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
+    Route::post('/animals', [AnimalController::class, 'store'])->name('animals.store');
+    Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
+    Route::match(['put', 'patch'], '/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
+    Route::delete('/animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
 });
