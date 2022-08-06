@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AnimalSeeder::class,
             OwnerSeeder::class,
+            InterectionSeeder::class,
         ]);
     }
 }
