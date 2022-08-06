@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,11 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::match(['put', 'patch'], '/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Route::apiResource('/owners', OwnerController::class);
+    Route::get('/owners', [OwnerController::class, 'index'])->name('owners.index');
+    Route::post('/owners', [OwnerController::class, 'store'])->name('owners.store');
+    Route::get('/owners/{owner}', [OwnerController::class, 'show'])->name('owners.show');
+    Route::match(['put', 'patch'], '/owners/{owner}', [OwnerController::class, 'update'])->name('owners.update');
+    Route::delete('/owners/{owner}', [OwnerController::class, 'destroy'])->name('owners.destroy');
 });
