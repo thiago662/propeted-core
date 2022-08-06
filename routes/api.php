@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\InterectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,4 +51,11 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
     Route::match(['put', 'patch'], '/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
     Route::delete('/animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
+
+    // Route::apiResource('/interections', InterectionController::class);
+    Route::get('/interections', [InterectionController::class, 'index'])->name('interections.index');
+    Route::post('/interections', [InterectionController::class, 'store'])->name('interections.store');
+    Route::get('/interections/{interection}', [InterectionController::class, 'show'])->name('interections.show');
+    Route::match(['put', 'patch'], '/interections/{interection}', [InterectionController::class, 'update'])->name('interections.update');
+    Route::delete('/interections/{interection}', [InterectionController::class, 'destroy'])->name('interections.destroy');
 });
