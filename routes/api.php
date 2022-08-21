@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:api']], function () {
     // Route::apiResource('/roles', RoleController::class);
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/option', [RoleController::class, 'option'])->name('roles.option');
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
     Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
     Route::match(['put', 'patch'], '/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Route::apiResource('/users', UserController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/option', [UserController::class, 'option'])->name('users.option');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::match(['put', 'patch'], '/users/{user}', [UserController::class, 'update'])->name('users.update');

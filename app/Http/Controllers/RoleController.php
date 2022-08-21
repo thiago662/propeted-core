@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista e filtra todos as funções.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -19,7 +19,17 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Retornar as opções de função.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function option()
+    {
+        return Role::all();
+    }
+
+    /**
+     * Cria uma função.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -30,7 +40,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Exibe uma função pelo id.
      *
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
@@ -41,7 +51,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualizar uma função pelo id.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Role  $role
@@ -53,7 +63,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Atualizar uma função pelo id.
      *
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response

@@ -8,18 +8,46 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista e filtra todos os usuarios.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        return User::paginate($request->per_page);
+        $users = User::with(['role']);
+
+        if ($request->active) {
+            $users->where('active', $request->active);
+        }
+
+        if ($request->role_id) {
+            $users->where('role_id', $request->role_id);
+        }
+
+        if ($request->email) {
+            $users->where('email', 'ilike', '%' . $request->email . '%');
+        }
+
+        if ($request->name) {
+            $users->where('name', 'ilike', '%' . $request->name . '%');
+        }
+
+        return $users->paginate($request->per_page);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Retornar as opções de usuarios.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function option()
+    {
+        return User::all();
+    }
+
+    /**
+     * Cria um usuario.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -30,7 +58,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Exibe um usuario pelo id.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
@@ -41,7 +69,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualizar um usuario pelo id.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
@@ -53,7 +81,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deleta um usuario pelo id.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
