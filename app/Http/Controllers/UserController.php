@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -43,17 +48,25 @@ class UserController extends Controller
      */
     public function option()
     {
-        return User::all();
+        return User::select([
+            'id',
+            'name',
+        ])->get();
     }
 
     /**
      * Cria um usuario.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
+        $request->merge([
+            'email' => Str::lower($request->email),
+            'password' => Hash::make($request->password),
+        ]);
+
         User::create($request->all());
     }
 
@@ -71,12 +84,24 @@ class UserController extends Controller
     /**
      * Atualizar um usuario pelo id.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserUpdateRequest  $request
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
+        $request->merge([
+            'email' => Str::lower($request->email),
+        ]);
+
+        if ($request->password) {
+            $request->merge([
+                'password' => Hash::make($request->password),
+            ]);
+        } else {
+            unset($request['password']);
+        }
+
         $user->update($request->all());
     }
 
@@ -89,5 +114,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+    }
+
+    public function profile()
+    {
+        return Auth::user();
     }
 }

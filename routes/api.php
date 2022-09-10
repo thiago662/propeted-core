@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile.show');
+
     // Route::apiResource('/roles', RoleController::class);
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/option', [RoleController::class, 'option'])->name('roles.option');
