@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Owner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\OwnerStoreRequest;
 
 class OwnerController extends Controller
 {
@@ -15,18 +17,110 @@ class OwnerController extends Controller
      */
     public function index(Request $request)
     {
-        return Owner::paginate($request->per_page);
+        $owners = Owner::query();
+
+        if ($request->active) {
+            $owners->where('active', $request->active);
+        }
+
+        if ($request->name) {
+            $owners->where('name', 'ilike', '%' . $request->name . '%');
+        }
+
+        if ($request->email) {
+            $owners->where('email', 'ilike', '%' . $request->email . '%');
+        }
+
+        if ($request->person_id) {
+            $owners->where('person_id', 'ilike', '%' . $request->person_id . '%');
+        }
+
+        if ($request->phone_number) {
+            $owners->where('phone_number', 'ilike', '%' . $request->phone_number . '%');
+        }
+
+        if ($request->cell_phone_number) {
+            $owners->where('cell_phone_number', 'ilike', '%' . $request->cell_phone_number . '%');
+        }
+
+        if ($request->zip_code) {
+            $owners->where('zip_code', 'ilike', '%' . $request->zip_code . '%');
+        }
+
+        if ($request->state) {
+            $owners->where('state', 'ilike', '%' . $request->state . '%');
+        }
+
+        if ($request->city) {
+            $owners->where('city', 'ilike', '%' . $request->city . '%');
+        }
+
+        if ($request->neighborhood) {
+            $owners->where('neighborhood', 'ilike', '%' . $request->neighborhood . '%');
+        }
+
+        if ($request->street) {
+            $owners->where('street', 'ilike', '%' . $request->street . '%');
+        }
+
+        if ($request->house_number) {
+            $owners->where('house_number', 'ilike', '%' . $request->house_number . '%');
+        }
+
+        if ($request->address_reference) {
+            $owners->where('address_reference', 'ilike', '%' . $request->address_reference . '%');
+        }
+
+        return $owners->paginate($request->per_page);
+    }
+
+    /**
+     * Retornar as opções de usuarios.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function option()
+    {
+        return Owner::select([
+            'id',
+            'name',
+        ])->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\OwnerStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OwnerStoreRequest $request)
     {
-        Owner::create($request->all());
+        $user = Auth::user();
+
+        $owner = Owner::create($request->all());
+
+        $pivot = [];
+
+        foreach ($request->animals as $animal) {
+            $pivot[] = $animal['animal_id'];
+        }
+
+        $pivot = array_filter(array_unique($pivot));
+
+        $owner->animals()->sync($pivot);
+
+        $interection = $owner->interections()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $message = $interection->message()->create([
+            'title' => 'criado',
+            'message' => 'criado',
+            'user_id' => $user->id,
+            'owner_id' => $owner->id,
+        ]);
+
+        return $owner;
     }
 
     /**
@@ -37,7 +131,9 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        return $owner;
+        return $owner->load(['interections' => function($query) {
+            $query->with(['message'])->orderBy('created_at', 'DESC');
+        }, 'animals']);
     }
 
     /**
@@ -50,6 +146,16 @@ class OwnerController extends Controller
     public function update(Request $request, Owner $owner)
     {
         $owner->update($request->all());
+
+        $pivot = [];
+
+        foreach ($request->animals as $animal) {
+            $pivot[] = $animal['animal_id'];
+        }
+
+        $pivot = array_filter(array_unique($pivot));
+
+        $owner->animals()->sync($pivot);
     }
 
     /**

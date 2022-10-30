@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\InterectionController;
 
 /*
@@ -44,6 +45,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Route::apiResource('/owners', OwnerController::class);
     Route::get('/owners', [OwnerController::class, 'index'])->name('owners.index');
+    Route::get('/owners/option', [OwnerController::class, 'option'])->name('owners.option');
     Route::post('/owners', [OwnerController::class, 'store'])->name('owners.store');
     Route::get('/owners/{owner}', [OwnerController::class, 'show'])->name('owners.show');
     Route::match(['put', 'patch'], '/owners/{owner}', [OwnerController::class, 'update'])->name('owners.update');
@@ -51,6 +53,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Route::apiResource('/animals', AnimalController::class);
     Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
+    Route::get('/animals/option', [AnimalController::class, 'option'])->name('animals.option');
     Route::post('/animals', [AnimalController::class, 'store'])->name('animals.store');
     Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
     Route::match(['put', 'patch'], '/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
@@ -62,4 +65,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/interections/{interection}', [InterectionController::class, 'show'])->name('interections.show');
     Route::match(['put', 'patch'], '/interections/{interection}', [InterectionController::class, 'update'])->name('interections.update');
     Route::delete('/interections/{interection}', [InterectionController::class, 'destroy'])->name('interections.destroy');
+
+    // Route::apiResource('/messages', MessageController::class);
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::get('/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
+    Route::match(['put', 'patch'], '/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 });

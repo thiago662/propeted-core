@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Interection extends Model
+class Message extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
         'id',
-        'type',
+        'title',
+        'message',
+        'body',
+        'interection_id',
         'user_id',
         'owner_id',
         'animal_id',
@@ -37,8 +40,8 @@ class Interection extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function message()
+    public function interection()
     {
-        return $this->hasOne(Message::class);
+        return $this->belongsTo(Interection::class);
     }
 }

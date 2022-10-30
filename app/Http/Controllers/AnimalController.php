@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Animal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AnimalController extends Controller
 {
@@ -15,7 +16,38 @@ class AnimalController extends Controller
      */
     public function index(Request $request)
     {
-        return Animal::paginate($request->per_page);
+        $animals = Animal::query();
+
+        if ($request->active) {
+            $animals->where('active', $request->active);
+        }
+
+        if ($request->name) {
+            $animals->where('name', 'ilike', '%' . $request->name . '%');
+        }
+
+        if ($request->species) {
+            $animals->where('species', 'ilike', '%' . $request->species . '%');
+        }
+
+        if ($request->breed) {
+            $animals->where('breed', 'ilike', '%' . $request->breed . '%');
+        }
+
+        return $animals->paginate($request->per_page);
+    }
+
+    /**
+     * Retornar as opções de usuarios.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function option()
+    {
+        return Animal::select([
+            'id',
+            'name',
+        ])->get();
     }
 
     /**
@@ -26,7 +58,32 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        Animal::create($request->all());
+        $user = Auth::user();
+
+        $animal = Animal::create($request->all());
+
+        $pivot = [];
+
+        foreach ($request->owners as $owner) {
+            $pivot[] = $owner['owner_id'];
+        }
+
+        $pivot = array_filter(array_unique($pivot));
+
+        $animal->owners()->sync($pivot);
+
+        $interection = $animal->interections()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $message = $interection->message()->create([
+            'title' => 'criado',
+            'message' => 'criado',
+            'user_id' => $user->id,
+            'animal_id' => $animal->id,
+        ]);
+
+        return $animal;
     }
 
     /**
@@ -37,7 +94,9 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        return $animal;
+        return $animal->load(['interections' => function($query) {
+            $query->with(['message'])->orderBy('created_at', 'DESC');
+        }, 'owners']);
     }
 
     /**
@@ -50,6 +109,16 @@ class AnimalController extends Controller
     public function update(Request $request, Animal $animal)
     {
         $animal->update($request->all());
+
+        $pivot = [];
+
+        foreach ($request->owners as $owner) {
+            $pivot[] = $owner['owner_id'];
+        }
+
+        $pivot = array_filter(array_unique($pivot));
+
+        $animal->owners()->sync($pivot);
     }
 
     /**

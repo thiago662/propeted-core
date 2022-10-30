@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Animal extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'id',
@@ -28,6 +30,6 @@ class Animal extends Model
 
     public function owners()
     {
-        return $this->belongsToMany(Owner::class);
+        return $this->belongsToMany(Owner::class, 'owner_animal');
     }
 }

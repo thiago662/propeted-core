@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('interections', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->nullable();
+            $table->string('title');
+            $table->string('message');
+            $table->string('body')->nullable();
+            $table->unsignedBigInteger('interection_id')->nullable();
+            $table->foreign('interection_id')->references('id')->on('interections');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('owner_id')->nullable();
@@ -34,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interections');
+        Schema::dropIfExists('messages');
     }
 };

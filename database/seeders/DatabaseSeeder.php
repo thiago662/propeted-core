@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
-            AnimalSeeder::class,
-            OwnerSeeder::class,
-            OwnerAnimalSeeder::class,
-            InterectionSeeder::class,
+            // AnimalSeeder::class,
+            // OwnerSeeder::class,
+            // OwnerAnimalSeeder::class,
+            // InterectionSeeder::class,
         ]);
     }
 }
