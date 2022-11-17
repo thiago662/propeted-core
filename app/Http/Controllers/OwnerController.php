@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Owner;
+use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\OwnerStoreRequest;
@@ -77,14 +78,23 @@ class OwnerController extends Controller
     /**
      * Retornar as opções de usuarios.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function option()
+    public function option(Request $request)
     {
         return Owner::select([
             'id',
             'name',
-        ])->get();
+        ])
+            ->when(!is_null($request->animal_id), function ($query) use ($request) {
+                $animal = Animal::find($request->animal_id);
+
+                $owners = $animal->owners->pluck('id');
+
+                $query->whereIn('id', $owners);
+            })
+            ->get();
     }
 
     /**
@@ -110,7 +120,8 @@ class OwnerController extends Controller
         $owner->animals()->sync($pivot);
 
         $interection = $owner->interections()->create([
-            'user_id' => $user->id,
+            'created_by' => $user->id,
+            'type' => 'create',
         ]);
 
         $message = $interection->message()->create([

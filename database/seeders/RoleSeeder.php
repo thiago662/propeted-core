@@ -25,6 +25,27 @@ class RoleSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'id' => 2,
+                'title' => 'administrator',
+                'active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id' => 3,
+                'title' => 'vet',
+                'active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id' => 4,
+                'title' => 'student',
+                'active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\InterectionController;
 
 /*
@@ -71,4 +72,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
     Route::match(['put', 'patch'], '/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
+    // Route::apiResource('/schedules', ScheduleController::class);
+    Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
+    Route::get('/schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedules.show');
+    Route::match(['put', 'patch'], '/schedules/{schedule}', [ScheduleController::class, 'update'])->name('schedules.update');
+    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
 });

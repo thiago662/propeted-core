@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('species')->nullable();
             $table->string('breed')->nullable();
+            $table->string('sex')->nullable();
             $table->date('birth_date')->nullable();
             $table->boolean('active');
             $table->timestamps();

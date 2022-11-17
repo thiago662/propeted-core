@@ -16,6 +16,7 @@ class Animal extends Model
         'name',
         'species',
         'breed',
+        'sex',
         'birth_date',
         'active',
         'created_at',

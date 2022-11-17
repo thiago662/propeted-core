@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Interection extends Model
+class Schedule extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -14,19 +14,22 @@ class Interection extends Model
     protected $fillable = [
         'id',
         'type',
+        'title',
+        'schedule_at',
+        'body',
+        'finished',
+        'finish_at',
+        'answered',
+        'response_message',
+        'response_body',
+        'interection_id',
         'user_id',
         'owner_id',
         'animal_id',
-        'created_by',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
-
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
 
     public function user()
     {
@@ -43,13 +46,8 @@ class Interection extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function message()
+    public function interection()
     {
-        return $this->hasOne(Message::class);
-    }
-
-    public function schedule()
-    {
-        return $this->hasOne(Schedule::class);
+        return $this->belongsTo(Interection::class);
     }
 }

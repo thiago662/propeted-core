@@ -44,14 +44,19 @@ class UserController extends Controller
     /**
      * Retornar as opções de usuarios.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function option()
+    public function option(Request $request)
     {
         return User::select([
             'id',
             'name',
-        ])->get();
+        ])
+            ->when(!is_null($request->role_ids), function ($query) use ($request) {
+                $query->whereIn('role_id', $request->role_ids);
+            })
+            ->get();
     }
 
     /**

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('message');
-            $table->string('body')->nullable();
+            $table->longText('body')->nullable();
             $table->unsignedBigInteger('interection_id')->nullable();
             $table->foreign('interection_id')->references('id')->on('interections');
             $table->unsignedBigInteger('user_id')->nullable();

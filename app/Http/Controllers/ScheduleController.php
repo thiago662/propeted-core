@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Owner;
-use App\Models\Message;
 use App\Models\Interection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\OwnerStoreRequest;
+use App\Models\Schedule;
 
-class MessageController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -50,46 +50,46 @@ class MessageController extends Controller
 
         $interection = Interection::create($params);
 
-        $message = $interection->message()->create($params);
+        $schedule = $interection->schedule()->create($params);
 
-        return $message;
+        return $schedule;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Message  $message
+     * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show(Schedule $schedule)
     {
-        return $message;
+        return $schedule;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Message  $message
+     * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Message $message)
+    public function update(Request $request, Schedule $schedule)
     {
-        $message->update($request->all());
+        $schedule->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Message  $message
+     * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Message $message)
+    public function destroy(Schedule $schedule)
     {
-        $interection = $message->interection();
+        $interection = $schedule->interection();
 
         $interection->delete();
 
-        $message->delete();
+        $schedule->delete();
     }
 }

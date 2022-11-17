@@ -73,7 +73,8 @@ class AnimalController extends Controller
         $animal->owners()->sync($pivot);
 
         $interection = $animal->interections()->create([
-            'user_id' => $user->id,
+            'created_by' => $user->id,
+            'type' => 'create',
         ]);
 
         $message = $interection->message()->create([
