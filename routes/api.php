@@ -74,7 +74,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 
     // Route::apiResource('/schedules', ScheduleController::class);
+    Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
+    Route::match(['put', 'patch'], '/schedules/finish/{schedule}', [ScheduleController::class, 'finish'])->name('schedules.finish');
     Route::get('/schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedules.show');
     Route::match(['put', 'patch'], '/schedules/{schedule}', [ScheduleController::class, 'update'])->name('schedules.update');
     Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');

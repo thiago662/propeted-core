@@ -95,8 +95,12 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        return $animal->load(['interections' => function($query) {
-            $query->with(['message'])->orderBy('created_at', 'DESC');
+        return $animal->load(['interections' => function ($query) {
+            $query->with(['message' => function ($query) {
+                $query->with(['user', 'animal', 'owner']);
+            }, 'schedule' => function ($query) {
+                $query->with(['user', 'animal', 'owner']);
+            }, 'createdBy'])->orderBy('created_at', 'DESC');
         }, 'owners']);
     }
 
