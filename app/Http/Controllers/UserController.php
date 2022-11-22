@@ -20,7 +20,20 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with(['role']);
+        $user = Auth::user();
+
+        if ($user->role_id == 4) {
+            return User::query()
+                ->with(['role'])
+                ->where('id', $user->id)
+                ->paginate($request->per_page);
+        }
+
+        $users = User::query()
+            ->with(['role'])
+            ->when($user->role_id != 1, function ($query) {
+                $query->whereIn('role_id', [2,3,4]);
+            });
 
         if ($request->active) {
             $users->where('active', $request->active);
@@ -49,10 +62,15 @@ class UserController extends Controller
      */
     public function option(Request $request)
     {
+        $user = Auth::user();
+
         return User::select([
             'id',
             'name',
         ])
+            ->when($user->role_id != 1, function ($query) {
+                $query->whereIn('role_id', [2,3,4]);
+            })
             ->when(!is_null($request->role_ids), function ($query) use ($request) {
                 $query->whereIn('role_id', $request->role_ids);
             })
@@ -67,6 +85,12 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+        $userAuth = Auth::user();
+
+        if ($userAuth->role_id == 4) {
+            return [];
+        }
+
         $request->merge([
             'email' => Str::lower($request->email),
             'password' => Hash::make($request->password),
@@ -83,6 +107,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $userAuth = Auth::user();
+
+        if (($userAuth->role_id == 4 && $userAuth->id != $user->id) || ($userAuth->role_id != 1 && $user->role_id == 1)) {
+            return [];
+        }
+
         return $user;
     }
 
@@ -95,6 +125,12 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
+        $userAuth = Auth::user();
+
+        if (($userAuth->role_id == 4 && $userAuth->id != $user->id) || ($userAuth->role_id != 1 && $user->role_id == 1)) {
+            return [];
+        }
+
         $request->merge([
             'email' => Str::lower($request->email),
         ]);

@@ -8,6 +8,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InterectionController;
 
 /*
@@ -80,4 +81,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedules.show');
     Route::match(['put', 'patch'], '/schedules/{schedule}', [ScheduleController::class, 'update'])->name('schedules.update');
     Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
+
+    // Route::apiResource('/dahsboard', DashboardController::class);
+    Route::get('/dahsboard', [DashboardController::class, 'index'])->name('dahsboard.index');
 });

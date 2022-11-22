@@ -143,7 +143,11 @@ class OwnerController extends Controller
     public function show(Owner $owner)
     {
         return $owner->load(['interections' => function($query) {
-            $query->with(['message'])->orderBy('created_at', 'DESC');
+            $query->with(['message' => function ($query) {
+                $query->with(['user', 'animal', 'owner']);
+            }, 'schedule' => function ($query) {
+                $query->with(['user', 'animal', 'owner']);
+            }, 'createdBy'])->orderBy('created_at', 'DESC');
         }, 'animals']);
     }
 

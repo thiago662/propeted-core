@@ -34,14 +34,14 @@ class RoleSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'title' => 'vet',
+                'title' => 'veterinario',
                 'active' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'id' => 4,
-                'title' => 'student',
+                'title' => 'estudante',
                 'active' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Animal;
+use App\Models\Owner;
+use App\Models\Schedule;
 
 class DashboardController extends Controller
 {
@@ -20,24 +23,47 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with(['role']);
+        $user = Auth::user();
 
-        if ($request->active) {
-            $users->where('active', $request->active);
-        }
+        $animals = Animal::query()->count();
+        $owners = Owner::query()->count();
+        $users = User::query()->when(in_array($user->role_id, [2,3,4]), function ($query) {
+            $query->whereIn('role_id', [2,3,4]);
+        })->count();
+        $openSchedules = Schedule::query()
+            ->when($user->role_id == 3, function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where(function ($query) {
+                $query->where('finished', false)
+                ->orWhere('finished', null);
+            })
+            ->count();
+        $closedSchedulesNotDone = Schedule::query()
+            ->when($user->role_id == 3, function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where('finished', true)
+            ->where(function ($query) {
+                $query->where('answered', false)
+                    ->orWhere('answered', null);
+            })
+            ->count();
+        $closeDoSchedules = Schedule::query()
+            ->when($user->role_id == 3, function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where('finished', true)
+            ->where('answered', true)
+            ->count();
 
-        if ($request->role_id) {
-            $users->where('role_id', $request->role_id);
-        }
-
-        if ($request->email) {
-            $users->where('email', 'ilike', '%' . $request->email . '%');
-        }
-
-        if ($request->name) {
-            $users->where('name', 'ilike', '%' . $request->name . '%');
-        }
-
-        return $users->paginate($request->per_page);
+        return [
+            'animals_count' => $animals,
+            'owners_count' => $owners,
+            'users_count' => $users,
+            'open_schedules_count' => $openSchedules,
+            'closed_schedules_not_done_count' => $closedSchedulesNotDone,
+            'closed_schedules_done_count' => $closeDoSchedules,
+        ];
     }
 }

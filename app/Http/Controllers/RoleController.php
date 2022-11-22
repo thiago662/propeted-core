@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -25,7 +26,13 @@ class RoleController extends Controller
      */
     public function option()
     {
-        return Role::all();
+        $user = Auth::user();
+
+        return Role::query()
+            ->when($user->role_id != 1, function ($query) {
+                $query->whereIn('id', [2,3,4]);
+            })
+            ->get();
     }
 
     /**
