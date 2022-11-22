@@ -29,8 +29,8 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Gabriel',
-                'email' => 'Gabriel@gmail.com',
+                'name' => 'Gabriel Anselmo',
+                'email' => 'gabriel.anselmo.soares@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Rafael',
-                'email' => 'Rafael@gmail.com',
+                'name' => 'Rafael Oliveira',
+                'email' => 'rafael.oliveirarto@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
@@ -49,8 +49,8 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Rafaela',
-                'email' => 'Rafaela@gmail.com',
+                'name' => 'Rafaela Angel',
+                'email' => 'rafaelaangel2007@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
