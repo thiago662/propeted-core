@@ -19,8 +19,8 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Thiago Gonçalves Santos',
-                'email' => 'thiago1santos12@gmail.com',
+                'name' => 'Thiago',
+                'email' => 'thiago@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
@@ -29,8 +29,8 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Gabriel Anselmo',
-                'email' => 'gabriel.anselmo.soares@gmail.com',
+                'name' => 'Mariana',
+                'email' => 'mariana@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Rafael Oliveira',
-                'email' => 'rafael.oliveirarto@gmail.com',
+                'name' => 'Keila',
+                'email' => 'keila@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
@@ -49,8 +49,8 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Rafaela Angel',
-                'email' => 'rafaelaangel2007@gmail.com',
+                'name' => 'Francisco',
+                'email' => 'francisco@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
                 'settings' => json_encode([]),
