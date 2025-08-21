@@ -1,64 +1,143 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# 📌 Working time
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**PT**:
+O **Working Time** é um sistema de controle de tempo de trabalho desenvolvido com Laravel, PostgreSQL e Docker. O objetivo principal é colocar em prática os estudos de programação sobre Laravel e seus recursos, como:
+- Blade para construção de interfaces gráficas
+- Estrutura MVC, um padrão de arquitetura de desenvolvimento muito eficiente para pequenos projetos
+- Laravel UI facilita a construção de interfaces gráficas com Bootstrap
+- Laravel UI Auth ajuda a gerenciar a autenticação de usuários baseada em sessão
 
-## About Laravel
+**EN**:
+**Working Time** is a time tracking system developed with Laravel, PostgreSQL, and Docker. Its main objective is to put into practice programming knowledge about Laravel and its features, such as:
+- Blade for building graphical interfaces
+- MVC structure, a very efficient development architecture pattern for small projects
+- Laravel UI makes it easy to build graphical interfaces with Bootstrap
+- Laravel UI Auth helps manage session-based user authentication
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🌟 Funcionalidades / Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**PT**:
+- **Gerenciar marcações de entrada e saída de trabalho**
+- **Ajuste de tempo**
+- **Visualizar tabela de pontos por mês**
 
-## Learning Laravel
+**EN**:
+- **Manage work clock-in and clock-out**
+- **Time adjustment**
+- **View timesheet by month**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tecnologias Utilizadas / Technologies
 
-## Laravel Sponsors
+**PT**:
+- **Linguagem**: [PHP](https://www.php.net/)
+- **Framework**: [Laravel](https://laravel.com/)
+- **Banco de Dados**: [PostgreSQL](https://www.postgresql.org/)
+- **Ferramentas**: [Docker](https://www.docker.com/)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+**EN**:
+- **Language**: [PHP](https://www.php.net/)
+- **Framework**: [Laravel](https://laravel.com/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/)
+- **Tools**: [Docker](https://www.docker.com/)
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## ⚙️ Instalação / Installation
 
-## Contributing
+**PT**:
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/thiago662/propeted-core.git
+   cd propeted-core
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Instale as dependências**:
+   ```bash
+   composer install ou composer update
+   php artisan key:generate
+   php artisan passport:keys
+   ```
 
-## Code of Conduct
+3. **Configure o ambiente**:
+   - Copiar e arquivo `.env.exemple` e alterar o nome para `.env`, alem disso será necessario alterar as varivais `DB_` que são relacionadas ao banco de dados com os valores do seu banco de dados.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Levantar infraestrutura de banco de dados em docker**:
+   - Rodar o comando `docker compose up -d` no terminal, isso ira subir uma maquina virtual com um banco de dados PostgreSQL.
 
-## Security Vulnerabilities
+5. **Rodar migrations**:
+   - Para criar a estrutura do banco de dados basta rodar o comando `php artisan migrate --seed` que vai rodas todas as migrations no banco criando sua estrutura base.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. **Instalar o passport**:
+   ```bash
+   php artisan passport:install
+   ```
 
-## License
+7. **Execute o projeto**:
+   ```bash
+   php artisan serve
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**EN**:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/thiago662/propeted-core.git
+   cd propeted-core
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   composer install ou composer update
+   php artisan key:generate
+   php artisan passport:keys
+   ```
+
+3. **Configure the environment**:
+   - Copy the `.env.example` file and change the name to `.env`. You will also need to change the `DB_` variables related to the database to the values from your database.
+
+4. **Set up database infrastructure in Docker**:
+   - Run the `docker compose up -d` command in the terminal. This will create a virtual machine with a PostgreSQL database.
+
+5. **Run migrations**:
+   - To create the database structure, simply run the `php artisan migrate --seed` command, which will run all migrations in the database, creating its base structure.
+
+6. **Install passport**:
+   ```bash
+   php artisan passport:install
+   ```
+
+7. **Run the project**: 
+   ```bash 
+   php artisan serve 
+   ```
+
+---
+
+## ✉️ Contato / Contact
+
+**Thiago Gonçalves Santos** - [@thiago662](https://github.com/thiago662) - thiago1santos12@gmail.com
+
+**PT**:
+🔗 **Link do Projeto**: [https://github.com/thiago662/working-time](https://github.com/thiago662/working-time)
+
+**EN**:
+🔗 **Project Link**: [https://github.com/thiago662/working-time](https://github.com/thiago662/working-time)
+
+---
+
+### 📌 Notas Adicionais / Additional Notes
+
+**PT**:
+- Se trata de um projeto pequeno e particular.
+- Seu principal intuido é para estudos e pratica de programação.
+
+**EN**:
+- This is a small and private project.
+- Its main purpose is for studying and practicing programming.
+
+![GitHub last commit](https://img.shields.io/github/last-commit/thiago662/working-time)
+
+---

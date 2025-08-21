@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            // OauthClientsSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             // AnimalSeeder::class,
